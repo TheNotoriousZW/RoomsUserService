@@ -1,0 +1,78 @@
+type User {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+    role: Role! #admin, user, manager, leader
+    teams: [String!]
+    branches: [String!]
+    organizationId: ID!
+    createdAt: String!
+    updatedAt: String!
+}
+
+enum Role {
+    ADMIN
+    USER
+    MANAGER
+    LEADER
+}
+
+type Team {
+    id: ID!
+    name: String!
+    users: [User!]
+    createdAt: String!
+    organizationId: ID!
+    projects: [String!]
+}
+
+type Organization {
+    id: ID!
+    name: String!
+    users: [User!]
+    teams: [Team!]
+    createdAt: String!
+}
+
+input UserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+    role: Role!
+    teams: [String!]
+    branches: [String!]
+    organizationId: ID!
+}
+
+input TeamInput {
+    name: String!
+    organizationId: ID!
+    users: [String!]
+}
+
+input OrganizationInput {
+    name: String!
+    users: [String!]
+    teams: [String!]
+}
+
+type Query {
+    getUsers: [User!]!
+    getUser(id: ID!): User!
+    getTeams: [Team!]!
+    getTeam(id: ID!): Team!
+    getOrganizations: [Organization!]!
+    getOrganization(id: ID!): Organization!
+    createUser(user: UserInput!): User!
+    createTeam(team: TeamInput!): Team!
+    createOrganization(organization: OrganizationInput!): Organization!
+    updateUser(id: ID!, user: UserInput!): User!
+    updateTeam(id: ID!, team: TeamInput!): Team!
+    updateOrganization(id: ID!, organization: OrganizationInput!): Organization!
+    deleteUser(id: ID!): User!
+    deleteTeam(id: ID!): Team!
+    deleteOrganization(id: ID!): Organization!
+}
